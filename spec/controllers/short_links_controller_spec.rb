@@ -38,7 +38,6 @@ RSpec.describe ShortLinksController, type: :controller do
 
       it 'returns a 201' do
         request
-        binding.pry
         expect(response).to have_http_status(:created)
       end
 
