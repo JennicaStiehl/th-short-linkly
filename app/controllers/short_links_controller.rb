@@ -12,7 +12,7 @@ class ShortLinksController < ApplicationController
       render json:
         {
             "long_link": "#{sl.long_link}",
-            "short_link": "http://test.host/#{@short_link.last.encoded_id}"
+            "short_link": "http://test.host/#{sl.encoded_id}"
           }
     else
           render json: { status: "401",
@@ -24,13 +24,13 @@ class ShortLinksController < ApplicationController
   end
 
   private
+  def short_link_params
+    params.permit(:long_link, :user_id, :id)
+  end
 
   def set_short_link
     @short_link = ShortLink.find_by_user_id(short_link_params[:user_id])
     head :not_found unless @short_link
   end
 
-  def short_link_params
-    params.permit(:long_link, :user_id, :id)
-  end
 end
