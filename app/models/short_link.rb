@@ -5,7 +5,7 @@ class ShortLink < ApplicationRecord
   validates :long_link, url: true
 
   def encoded_id
-    user_id.to_s(36)
+    id.to_s(36)
   end
 
   def self.decoded_id(short_link_encoded_id)

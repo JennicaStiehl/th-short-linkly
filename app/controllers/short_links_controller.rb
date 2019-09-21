@@ -7,16 +7,13 @@ class ShortLinksController < ApplicationController
 
   def create
     sl = ShortLink.new(short_link_params)
+    sl.save
     if sl
-      sl.save
       render json:
-      { status: "201",
-        # status_code: :created,
-          body:
         {
-            "long_link": sl.long_link,
-            "short_link": @short_link
-          }}
+            "long_link": "#{sl.long_link}",
+            "short_link": "http://test.host/#{@short_link.last.encoded_id}"
+          }
     else
           render json: { status: "401",
           body:
@@ -29,11 +26,11 @@ class ShortLinksController < ApplicationController
   private
 
   def set_short_link
-    @short_link = ShortLink.find_by_user_id(params[:user_id])
+    @short_link = ShortLink.find_by_user_id(short_link_params[:user_id])
     head :not_found unless @short_link
   end
 
   def short_link_params
-    params.permit(:long_link, :user_id)
+    params.permit(:long_link, :user_id, :id)
   end
 end
