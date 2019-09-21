@@ -35,7 +35,9 @@ RSpec.describe ShortLinksController, type: :controller do
     context 'with valid params' do
       let(:long_link) { 'https://www.google.com' }
       let(:params) { { long_link: long_link, user_id: 1 } }
+      # let(:request) { post :create, params: params }
 
+      # binding.pry
       it 'returns a 201' do
         request
         expect(response).to have_http_status(:created)
